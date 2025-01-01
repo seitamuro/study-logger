@@ -1,4 +1,3 @@
-import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { Amplify } from 'aws-amplify';
 import { StrictMode } from 'react';
@@ -17,9 +16,7 @@ Amplify.configure({
 });
 
 createRoot(document.getElementById('root')!).render(
-  <Authenticator>
-    <StrictMode>
-      <App />
-    </StrictMode>
-  </Authenticator>
+  <StrictMode>
+    <App />
+  </StrictMode>
 );

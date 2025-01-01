@@ -1,27 +1,20 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
+import { Sidebar } from './components/Sidebar';
 import { AboutPage } from './pages/About';
-import { HomePage } from './pages/Home';
-
-const routes = [
-  {
-    path: '/',
-    Component: HomePage,
-  },
-  {
-    path: '/about',
-    Component: AboutPage,
-  },
-];
+import { LandingPage } from './pages/LandingPage';
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {routes.map(({ path, Component }, i) => (
-          <Route key={i} path={path} element={<Component />} />
-        ))}
-      </Routes>
+      <div style={{ display: 'flex' }}>
+        <Sidebar />
+        <main style={{ flex: 1, padding: '20px' }}>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+        </main>
+      </div>
     </BrowserRouter>
   );
 }
