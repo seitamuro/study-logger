@@ -32,12 +32,19 @@ export const Sidebar = ({ isOpen }: SidebarProps) => {
               fontSize: '16px'
             }}>Home</Link>
           </li>
-          <li>
+          <li style={{ marginBottom: '10px' }}>
             <Link to="/about" style={{
               textDecoration: 'none',
               color: '#333',
               fontSize: '16px'
             }}>About</Link>
+          </li>
+          <li style={{ marginBottom: '10px' }}>
+            <Link to="/timer" style={{
+              textDecoration: 'none',
+              color: '#333',
+              fontSize: '16px'
+            }}>Timer</Link>
           </li>
         </ul>
       </nav>

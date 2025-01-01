@@ -5,6 +5,8 @@ import { HamburgerButton } from './components/HamburgerButton';
 import { Sidebar } from './components/Sidebar';
 import { AboutPage } from './pages/About';
 import { LandingPage } from './pages/LandingPage';
+import { NotFoundPage } from './pages/NotFoundPage';
+import { TimerPage } from './pages/TimerPage';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -25,6 +27,8 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/timer" element={<TimerPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
     </BrowserRouter>
