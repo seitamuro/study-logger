@@ -63,6 +63,14 @@ export class FrontendStack extends cdk.Stack {
         },
       })
     );
+    destinationBucket.addToResourcePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        principals: [new iam.AccountRootPrincipal()],
+        actions: ['s3:*'],
+        resources: [destinationBucket.bucketArn, `${destinationBucket.bucketArn}/*`],
+      })
+    );
 
     new cdk.CfnOutput(this, 'BucketName', {
       value: destinationBucket.bucketName,
