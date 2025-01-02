@@ -1,0 +1,9 @@
+/* 平日の日付の文字色を黒に設定 */
+.react-calendar__tile {
+  color: black;
+}
+
+/* 土日の日付は元の色（白）を維持 */
+.react-calendar__month-view__days__day--weekend {
+  color: red;
+}

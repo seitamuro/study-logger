@@ -46,6 +46,13 @@ export const Sidebar = ({ isOpen }: SidebarProps) => {
               fontSize: '16px'
             }}>Timer</Link>
           </li>
+          <li style={{ marginBottom: '10px' }}>
+            <Link to="/result" style={{
+              textDecoration: 'none',
+              color: '#333',
+              fontSize: '16px'
+            }}>Result</Link>
+          </li>
         </ul>
       </nav>
     </div>
