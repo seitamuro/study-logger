@@ -78,6 +78,18 @@ export const Sidebar = ({ isOpen }: SidebarProps) => {
               Result
             </Link>
           </li>
+          <li style={{ marginBottom: '10px' }}>
+            <Link
+              to="/profile"
+              style={{
+                textDecoration: 'none',
+                color: '#333',
+                fontSize: '16px',
+              }}
+            >
+              Profile
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>
