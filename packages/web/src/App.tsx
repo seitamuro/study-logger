@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import "./App.css";
+import './App.css';
 import { HamburgerButton } from './components/HamburgerButton';
 import { Sidebar } from './components/Sidebar';
 import { AboutPage } from './pages/About';
@@ -24,7 +24,7 @@ function App() {
         style={{
           padding: '20px',
           marginLeft: '20px',
-          marginTop: '60px'
+          marginTop: '60px',
         }}
       >
         <Routes>

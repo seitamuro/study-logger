@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Calendar from 'react-calendar';
 
 import 'react-calendar/dist/Calendar.css';
-import "./custom-calendar.css";
+import './custom-calendar.css';
 
 type Value = Date | null | [Date | null, Date | null];
 
@@ -11,7 +11,7 @@ const results = [
   { date: '2025-01-02', time: 125 },
   { date: '2025-01-04', time: 25 },
   { date: '2025-01-05', time: 125 },
-]
+];
 
 export const ResultPage = () => {
   const [value, setValue] = useState<Value>(new Date(2025, 0, 1));
@@ -19,7 +19,7 @@ export const ResultPage = () => {
   // 日付ごとの学習時間を取得
   const getTimeForDate = (date: Date) => {
     const dateStr = date.toISOString().split('T')[0];
-    const result = results.find(r => r.date === dateStr);
+    const result = results.find((r) => r.date === dateStr);
     console.log(`${date.toISOString()}: ${result?.time || 0}`);
     return result?.time || 0;
   };
@@ -36,9 +36,7 @@ export const ResultPage = () => {
   // タイルの内容をカスタマイズ
   const getTileContent = ({ date }: { date: Date }) => {
     const time = getTimeForDate(date);
-    return time > 0 ? (
-      <div className="study-time-tooltip">{time}分</div>
-    ) : null;
+    return time > 0 ? <div className="study-time-tooltip">{time}分</div> : null;
   };
 
   return (
@@ -83,7 +81,7 @@ export const ResultPage = () => {
       `}</style>
       <Calendar
         value={value}
-        locale='ja-JP'
+        locale="ja-JP"
         onChange={setValue}
         tileClassName={getTileClassName}
         tileContent={getTileContent}

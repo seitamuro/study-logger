@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 type TimerProps = {
   duration?: number;
   timeResetCallback?: () => void;
   timeUpCallback?: () => void;
-}
+};
 
 export const Timer = ({
   duration = 25 * 60,
-  timeResetCallback = () => { },
-  timeUpCallback = () => { }
+  timeResetCallback = () => {},
+  timeUpCallback = () => {},
 }: TimerProps) => {
   const [timeLeft, setTimeLeft] = useState(duration);
   const [isRunning, setIsRunning] = useState(false);
@@ -50,23 +50,27 @@ export const Timer = ({
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: '20px'
-    }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '20px',
+      }}
+    >
       <h1>Timer</h1>
 
-      <div style={{
-        position: 'relative',
-        width: '200px',
-        height: '200px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: '20px 0'
-      }}>
+      <div
+        style={{
+          position: 'relative',
+          width: '200px',
+          height: '200px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          margin: '20px 0',
+        }}
+      >
         {/* プログレスバー */}
         <svg
           width="200"
@@ -74,18 +78,11 @@ export const Timer = ({
           viewBox="0 0 200 200"
           style={{
             position: 'absolute',
-            transform: 'rotate(-90deg)'
+            transform: 'rotate(-90deg)',
           }}
         >
           {/* 背景の円 */}
-          <circle
-            cx="100"
-            cy="100"
-            r="90"
-            fill="none"
-            stroke="#f0f0f0"
-            strokeWidth="10"
-          />
+          <circle cx="100" cy="100" r="90" fill="none" stroke="#f0f0f0" strokeWidth="10" />
           {/* プログレス円 */}
           <circle
             cx="100"
@@ -98,26 +95,30 @@ export const Timer = ({
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
             style={{
-              transition: 'stroke-dashoffset 0.5s ease'
+              transition: 'stroke-dashoffset 0.5s ease',
             }}
           />
         </svg>
 
         {/* タイマー表示 */}
-        <div style={{
-          fontSize: '2.5rem',
-          fontWeight: 'bold',
-          color: '#333'
-        }}>
+        <div
+          style={{
+            fontSize: '2.5rem',
+            fontWeight: 'bold',
+            color: '#333',
+          }}
+        >
           {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
         </div>
       </div>
 
-      <div style={{
-        display: 'flex',
-        gap: '10px',
-        marginTop: '20px'
-      }}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '10px',
+          marginTop: '20px',
+        }}
+      >
         <button
           onClick={toggleTimer}
           style={{
@@ -127,7 +128,7 @@ export const Timer = ({
             color: 'white',
             border: 'none',
             borderRadius: '5px',
-            cursor: 'pointer'
+            cursor: 'pointer',
           }}
         >
           {isRunning ? '停止' : '開始'}
@@ -142,12 +143,12 @@ export const Timer = ({
             color: 'white',
             border: 'none',
             borderRadius: '5px',
-            cursor: 'pointer'
+            cursor: 'pointer',
           }}
         >
           リセット
         </button>
       </div>
     </div>
-  )
-}
+  );
+};

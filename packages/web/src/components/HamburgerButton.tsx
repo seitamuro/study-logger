@@ -15,16 +15,18 @@ export const HamburgerButton = ({ onClick, isOpen }: HamburgerButtonProps) => {
         background: 'white',
         border: 'none',
         cursor: 'pointer',
-        padding: '10px'
+        padding: '10px',
       }}
     >
-      <div style={{
-        width: '25px',
-        height: '20px',
-        position: 'relative',
-        transform: isOpen ? 'rotate(45deg)' : 'none',
-        transition: 'transform 0.3s ease'
-      }}>
+      <div
+        style={{
+          width: '25px',
+          height: '20px',
+          position: 'relative',
+          transform: isOpen ? 'rotate(45deg)' : 'none',
+          transition: 'transform 0.3s ease',
+        }}
+      >
         {[0, 1, 2].map((i) => (
           <span
             key={i}
@@ -44,7 +46,7 @@ export const HamburgerButton = ({ onClick, isOpen }: HamburgerButtonProps) => {
                     ? 'rotate(-90deg) translateX(-8px)'
                     : 'none'
                 : 'none',
-              transition: 'transform 0.3s ease, opacity 0.3s ease'
+              transition: 'transform 0.3s ease, opacity 0.3s ease',
             }}
           />
         ))}

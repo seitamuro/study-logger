@@ -6,52 +6,77 @@ export interface SidebarProps {
 
 export const Sidebar = ({ isOpen }: SidebarProps) => {
   return (
-    <div className="sidebar" style={{
-      width: '250px',
-      height: '100vh',
-      backgroundColor: '#f8f9fa',
-      borderRight: '1px solid #dee2e6',
-      padding: '20px',
-      position: 'fixed',
-      top: 0,
-      left: isOpen ? 0 : '-250px',
-      transition: 'left 0.3s ease',
-      zIndex: 999
-    }}>
+    <div
+      className="sidebar"
+      style={{
+        width: '250px',
+        height: '100vh',
+        backgroundColor: '#f8f9fa',
+        borderRight: '1px solid #dee2e6',
+        padding: '20px',
+        position: 'fixed',
+        top: 0,
+        left: isOpen ? 0 : '-250px',
+        transition: 'left 0.3s ease',
+        zIndex: 999,
+      }}
+    >
       <nav>
-        <h3 style={{ color: "#333" }}>メニュー</h3>
-        <ul style={{
-          listStyle: 'none',
-          padding: 0,
-          margin: 0
-        }}>
+        <h3 style={{ color: '#333' }}>メニュー</h3>
+        <ul
+          style={{
+            listStyle: 'none',
+            padding: 0,
+            margin: 0,
+          }}
+        >
           <li style={{ marginBottom: '10px' }}>
-            <Link to="/" style={{
-              textDecoration: 'none',
-              color: '#333',
-              fontSize: '16px'
-            }}>Home</Link>
+            <Link
+              to="/"
+              style={{
+                textDecoration: 'none',
+                color: '#333',
+                fontSize: '16px',
+              }}
+            >
+              Home
+            </Link>
           </li>
           <li style={{ marginBottom: '10px' }}>
-            <Link to="/about" style={{
-              textDecoration: 'none',
-              color: '#333',
-              fontSize: '16px'
-            }}>About</Link>
+            <Link
+              to="/about"
+              style={{
+                textDecoration: 'none',
+                color: '#333',
+                fontSize: '16px',
+              }}
+            >
+              About
+            </Link>
           </li>
           <li style={{ marginBottom: '10px' }}>
-            <Link to="/timer" style={{
-              textDecoration: 'none',
-              color: '#333',
-              fontSize: '16px'
-            }}>Timer</Link>
+            <Link
+              to="/timer"
+              style={{
+                textDecoration: 'none',
+                color: '#333',
+                fontSize: '16px',
+              }}
+            >
+              Timer
+            </Link>
           </li>
           <li style={{ marginBottom: '10px' }}>
-            <Link to="/result" style={{
-              textDecoration: 'none',
-              color: '#333',
-              fontSize: '16px'
-            }}>Result</Link>
+            <Link
+              to="/result"
+              style={{
+                textDecoration: 'none',
+                color: '#333',
+                fontSize: '16px',
+              }}
+            >
+              Result
+            </Link>
           </li>
         </ul>
       </nav>
