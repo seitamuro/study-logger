@@ -3,6 +3,7 @@ import { OpenAPIHono } from '@hono/zod-openapi';
 import { echoApi } from './echo';
 import { helloApi } from './hello';
 import { helloAuthApi } from './hello-auth';
+import { timeApi } from './time';
 
 export const api = new OpenAPIHono();
 
@@ -17,6 +18,7 @@ api
   .route('/hello', helloApi)
   .route('/hello-auth', helloAuthApi)
   .route('/echo', echoApi)
+  .route('/time', timeApi)
   .doc('/specification', {
     openapi: '3.0.3',
     info: {
