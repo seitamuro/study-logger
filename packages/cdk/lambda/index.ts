@@ -6,6 +6,7 @@ import { logger } from 'hono/logger';
 import { auth } from './middlewares/auth';
 
 import { DynamoDBClient, UpdateItemCommand } from '@aws-sdk/client-dynamodb';
+import { api } from './api';
 
 type Env = {
   Variables: {
@@ -29,10 +30,11 @@ app.get('/hello-auth', auth, (c) => {
 app.post('/timer/start', auth, async (c) => {
   const payload = c.get('idTokenPayload');
 
-  let body;
+  //let body;
+  const body = await c.req.json();
   try {
     const _body = await c.req.json();
-    body = postStartTimerSchema.parse(_body);
+    //body = postStartTimerSchema.parse(_body);
   } catch (e) {
     console.error(e);
     return c.json({ message: JSON.stringify(e) }, 400);
@@ -83,5 +85,7 @@ app.post('/echo', async (c) => {
 app.get('/time', (c) => {
   return c.json({ time: new Date().toISOString() });
 });
+
+app.route('/api', api);
 
 export const handler = handle(app);
