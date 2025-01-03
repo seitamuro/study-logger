@@ -1,10 +1,17 @@
+import { CognitoIdTokenPayload } from 'aws-jwt-verify/jwt-model';
 import { Hono } from 'hono';
 import { handle } from 'hono/aws-lambda';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { auth } from './middlewares/auth';
 
-export const app = new Hono();
+type Env = {
+  Variables: {
+    idTokenPayload: CognitoIdTokenPayload;
+  };
+};
+
+export const app = new Hono<Env>();
 
 app.use('*', logger());
 app.use('*', cors());
@@ -15,6 +22,21 @@ app.get('/hello', (c) => {
 
 app.get('/hello-auth', auth, (c) => {
   return c.text('Hello, Authenticated World!');
+});
+
+app.post('/timer/start', auth, (c) => {
+  const payload = c.get('idTokenPayload');
+  console.log('Starting timer');
+  return c.json({ message: `Timer started. Your sub is ${payload.sub}` });
+});
+
+app.get('/timer/status', auth, (c) => {
+  return c.json({ status: 'running' });
+});
+
+app.post('/timer/stop', auth, (c) => {
+  console.log('Stopping timer');
+  return c.json({ message: 'Timer stopped' });
 });
 
 app.post('/echo', async (c) => {
