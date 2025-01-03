@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "types": "workspace:*",
     "@types/node": "22.7.9",
     "aws-cdk": "2.173.1",
     "eslint": "^9.17.0",
@@ -32,6 +33,7 @@
     "aws-cdk-lib": "2.173.1",
     "aws-jwt-verify": "^4.0.1",
     "cdk": "^2.173.2",
+    "client-dynamodb": "link:@types/@aws-sdk/client-dynamodb",
     "constructs": "^10.0.0",
     "deploy-time-build": "^0.3.23",
     "hono": "^4.6.15",

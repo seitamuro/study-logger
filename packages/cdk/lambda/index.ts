@@ -28,6 +28,16 @@ app.get('/hello-auth', auth, (c) => {
 
 app.post('/timer/start', auth, async (c) => {
   const payload = c.get('idTokenPayload');
+
+  let body;
+  try {
+    const _body = await c.req.json();
+    body = postStartTimerSchema.parse(_body);
+  } catch (e) {
+    console.error(e);
+    return c.json({ message: JSON.stringify(e) }, 400);
+  }
+
   const client = new DynamoDBClient({});
 
   const params = {
@@ -36,9 +46,12 @@ app.post('/timer/start', auth, async (c) => {
       userId: { S: payload.sub },
       timestamp: { S: new Date().toISOString() },
     },
-    UpdateExpression: 'SET #status= :status',
-    ExpressionAttributeNames: { '#status': 'status' },
-    ExpressionAttributeValues: { ':status': { S: 'running' } },
+    UpdateExpression: 'SET #status = :status, #duration = :duration',
+    ExpressionAttributeNames: { '#status': 'status', '#duration': 'duration' },
+    ExpressionAttributeValues: {
+      ':status': { S: 'running' },
+      ':duration': { N: `${body.duration}` },
+    },
   };
   const command = new UpdateItemCommand(params);
   try {
