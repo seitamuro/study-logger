@@ -23,6 +23,12 @@ api
       title: 'API',
       version: '1.0.0',
     },
+    servers: [
+      {
+        url: '/api',
+        description: 'Api Server',
+      },
+    ],
   } as any)
   .get(
     '/doc',
