@@ -1,5 +1,6 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
+import { echoApi } from './echo';
 import { helloApi } from './hello';
 import { helloAuthApi } from './hello-auth';
 
@@ -15,6 +16,7 @@ api.openAPIRegistry.registerComponent('securitySchemes', 'Authorization', {
 api
   .route('/hello', helloApi)
   .route('/hello-auth', helloAuthApi)
+  .route('/echo', echoApi)
   .doc('/specification', {
     openapi: '3.0.3',
     info: {

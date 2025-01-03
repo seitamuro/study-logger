@@ -3,6 +3,7 @@ import { Hono } from 'hono';
 import { handle } from 'hono/aws-lambda';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
+import { prettyJSON } from 'hono/pretty-json';
 import { auth } from './middlewares/auth';
 
 import { DynamoDBClient, UpdateItemCommand } from '@aws-sdk/client-dynamodb';
@@ -18,6 +19,7 @@ export const app = new Hono<Env>();
 
 app.use('*', logger());
 app.use('*', cors());
+app.use('*', prettyJSON());
 
 app.get('/hello', (c) => {
   return c.text('Hello, World!');
