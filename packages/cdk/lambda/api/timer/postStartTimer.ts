@@ -1,7 +1,7 @@
-import { DynamoDBClient, UpdateItemCommand } from '@aws-sdk/client-dynamodb';
 import { createRoute, RouteHandler, z } from '@hono/zod-openapi';
-import { ErrorResponse, TimerRecordSchema } from 'types/models';
+import { ErrorResponse, MessageSchema } from 'types/models';
 import { Env } from '../../index';
+import { startTimerRecord } from './common/updateRecord';
 
 const requestBodySchema = z.object({
   duration: z.number(),
@@ -32,7 +32,7 @@ export const postStartTimerRoute = createRoute({
       description: 'OK',
       content: {
         'application/json': {
-          schema: TimerRecordSchema,
+          schema: MessageSchema,
         },
       },
     },
@@ -69,41 +69,9 @@ export const postStartTimerHandler: RouteHandler<typeof postStartTimerRoute, Env
     const rawBody = await c.req.json();
     const body = requestBodySchema.parse(rawBody);
 
-    const timestamp = new Date().toISOString();
-    const client = new DynamoDBClient({});
+    await startTimerRecord(payload.sub, body.duration);
 
-    const record = TimerRecordSchema.parse({
-      userId: payload.sub,
-      timestamp: timestamp,
-      status: 'in progress',
-      duration: body.duration,
-    });
-
-    const params = {
-      TableName: process.env.TIMER_TABLE_NAME,
-      Key: {
-        userId: { S: record.userId },
-        timestamp: { S: record.timestamp },
-      },
-      UpdateExpression: 'SET #status = :status, #duration = :duration',
-      ExpressionAttributeNames: { '#status': 'status', '#duration': 'duration' },
-      ExpressionAttributeValues: {
-        ':status': { S: record.status },
-        ':duration': { N: `${record.duration}` },
-      },
-    };
-
-    const command = new UpdateItemCommand(params);
-    await client.send(command);
-
-    const timerRecord = {
-      userId: payload.sub,
-      timestamp: timestamp,
-      status: 'in progress' as const,
-      duration: body.duration,
-    };
-
-    return c.json(timerRecord, 200);
+    return c.json({ message: 'timer is started' }, 200);
   } catch (e) {
     console.error(e);
     if (e instanceof z.ZodError) {
