@@ -9,7 +9,7 @@ import { auth } from './middlewares/auth';
 import { DynamoDBClient, UpdateItemCommand } from '@aws-sdk/client-dynamodb';
 import { api } from './api';
 
-type Env = {
+export type Env = {
   Variables: {
     idTokenPayload: CognitoIdTokenPayload;
   };
