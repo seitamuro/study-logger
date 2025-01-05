@@ -1,16 +1,16 @@
 import { createRoute, RouteHandler, z } from '@hono/zod-openapi';
-import { ErrorResponse, MessageSchema } from 'types/models';
+import { ErrorResponse, MessageSchema, TimerRecordStatus } from 'types/models';
 import { Env } from '../../index';
-import { startTimerRecord } from './common/updateRecord';
+import { updateTimerRecord } from './common/';
 
 const requestBodySchema = z.object({
-  duration: z.number(),
+  duration: z.number().int().positive(),
 });
 
-export const postStartTimerRoute = createRoute({
-  path: '/',
+export const postTimerRecordRoute = createRoute({
+  path: '/record',
   method: 'post',
-  description: 'Start a timer',
+  description: 'Record a timer',
   security: [{ Authorization: [] }],
   request: {
     headers: z.object({
@@ -63,15 +63,22 @@ export const postStartTimerRoute = createRoute({
   },
 });
 
-export const postStartTimerHandler: RouteHandler<typeof postStartTimerRoute, Env> = async (c) => {
+export const postTimerRecordHandler: RouteHandler<typeof postTimerRecordRoute, Env> = async (c) => {
   try {
     const payload = c.get('idTokenPayload');
     const rawBody = await c.req.json();
     const body = requestBodySchema.parse(rawBody);
 
-    await startTimerRecord(payload.sub, body.duration);
+    const record = {
+      userId: payload.sub,
+      timestamp: new Date().toISOString(),
+      status: TimerRecordStatus.Completed,
+      duration: body.duration,
+    };
 
-    return c.json({ message: 'timer is started' }, 200);
+    await updateTimerRecord(record);
+
+    return c.json({ message: 'timer is recorded' }, 200);
   } catch (e) {
     console.error(e);
     if (e instanceof z.ZodError) {

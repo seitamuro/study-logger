@@ -1,5 +1,7 @@
 import {
   DynamoDBClient,
+  QueryCommand,
+  QueryCommandInput,
   UpdateItemCommand,
   UpdateItemCommandInput,
 } from '@aws-sdk/client-dynamodb';
@@ -16,17 +18,7 @@ export const validateTimerRecord = (record: TimerRecord): boolean => {
   }
 };
 
-export const updateTimerRecord = async ({
-  userId,
-  timestamp,
-  status,
-  duration,
-}: {
-  userId: string;
-  timestamp: string;
-  status: TimerRecordStatus;
-  duration: number;
-}) => {
+export const updateTimerRecord = async ({ userId, timestamp, status, duration }: TimerRecord) => {
   const record = {
     userId,
     timestamp,
@@ -63,4 +55,35 @@ export const startTimerRecord = async (userId: string, duration: number = 25 * 6
     duration: duration,
   };
   return updateTimerRecord(record);
+};
+
+export const getTimerRecords = async (userId: string, year: number, month: number) => {
+  const params: QueryCommandInput = {
+    TableName: process.env.TIMER_TABLE_NAME,
+    KeyConditionExpression: 'userId = :userId AND #timestamp BETWEEN :start AND :end',
+    ExpressionAttributeNames: { '#timestamp': 'timestamp' },
+    ExpressionAttributeValues: {
+      ':userId': { S: userId },
+      ':start': { S: `${year}-${month.toString().padStart(2, '0')}-01T00:00:00.000Z` },
+      ':end': { S: `${year}-${(month + 1).toString().padStart(2, '0')}-01T00:00:00.000Z` },
+    },
+    ScanIndexForward: true, // ascending order
+  };
+
+  const command = new QueryCommand(params);
+  const response = await client.send(command);
+
+  if (response.Items && response.Items.length > 0) {
+    const items: TimerRecord[] = response.Items.map((item) => {
+      return {
+        userId: item.userId.S!,
+        timestamp: item.timestamp.S!,
+        status: item.status.S! as TimerRecordStatus,
+        duration: parseInt(item.duration.N!),
+      };
+    });
+    return items;
+  } else {
+    return undefined;
+  }
 };
