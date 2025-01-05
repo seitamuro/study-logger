@@ -152,6 +152,9 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
+      types:
+        specifier: workspace:*
+        version: link:../types
       typescript:
         specifier: ~5.6.2
         version: 5.6.3
