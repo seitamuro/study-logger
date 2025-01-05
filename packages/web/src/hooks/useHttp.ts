@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import useSWR, { SWRConfiguration } from 'swr';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_ENDPOINT,
+  baseURL: `${import.meta.env.VITE_API_ENDPOINT}/api`,
 });
 api.interceptors.request.use(async (config) => {
   const token = (await fetchAuthSession()).tokens?.idToken?.toString();
