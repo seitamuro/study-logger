@@ -1,3 +1,4 @@
+import { Authenticator } from '@aws-amplify/ui-react';
 import {
   Box,
   Paper,
@@ -36,33 +37,35 @@ export const ResultPage = () => {
   }, [records]);
 
   return (
-    <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Typography variant="h4" component="h1" sx={{ mb: 4 }}>
-        学習記録カレンダー
-      </Typography>
-      <TableContainer component={Paper} sx={{ maxWidth: 800, width: '100%' }}>
-        <Table>
-          <TableHead>
-            <TableRow sx={{ '& th': { borderBottom: '2px solid black' } }}>
-              <TableCell sx={{ fontSize: '1rem', fontWeight: 500 }}>日時</TableCell>
-              <TableCell sx={{ fontSize: '1rem', fontWeight: 500 }}>学習時間</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {records &&
-              records.map((record) => (
-                <TableRow key={record.timestamp} hover>
-                  <TableCell>{formatDate(record.timestamp)}</TableCell>
-                  <TableCell>{record.duration}分</TableCell>
-                </TableRow>
-              ))}
-            <TableRow sx={{ '& td': { borderTop: '2px solid black' } }}>
-              <TableCell>合計</TableCell>
-              <TableCell>{totalTime}分</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+    <Authenticator>
+      <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Typography variant="h4" component="h1" sx={{ mb: 4 }}>
+          学習記録カレンダー
+        </Typography>
+        <TableContainer component={Paper} sx={{ maxWidth: 800, width: '100%' }}>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ '& th': { borderBottom: '2px solid black' } }}>
+                <TableCell sx={{ fontSize: '1rem', fontWeight: 500 }}>日時</TableCell>
+                <TableCell sx={{ fontSize: '1rem', fontWeight: 500 }}>学習時間</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {records &&
+                records.map((record) => (
+                  <TableRow key={record.timestamp} hover>
+                    <TableCell>{formatDate(record.timestamp)}</TableCell>
+                    <TableCell>{record.duration}分</TableCell>
+                  </TableRow>
+                ))}
+              <TableRow sx={{ '& td': { borderTop: '2px solid black' } }}>
+                <TableCell>合計</TableCell>
+                <TableCell>{totalTime}分</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </Authenticator>
   );
 };
