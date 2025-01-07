@@ -6,4 +6,4 @@ export const MessageSchema = z
   })
   .openapi("MessageSchema");
 
-export type MessageSchema = z.infer<typeof MessageSchema>;
+export type Message = z.infer<typeof MessageSchema>;

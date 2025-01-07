@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type TimerProps = {
   duration?: number;
@@ -13,6 +13,7 @@ export const Timer = ({
 }: TimerProps) => {
   const [timeLeft, setTimeLeft] = useState(duration);
   const [isRunning, setIsRunning] = useState(false);
+  const hasCalledTimeUpCallback = useRef(false);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -20,17 +21,13 @@ export const Timer = ({
       timer = setInterval(() => {
         setTimeLeft((prev) => prev - 1);
       }, 1000);
-    } else if (timeLeft === 0) {
+    } else if (timeLeft === 0 && !hasCalledTimeUpCallback.current) {
       setIsRunning(false);
-    }
-    return () => clearInterval(timer);
-  }, [isRunning, timeLeft]);
-
-  useEffect(() => {
-    if (timeLeft === 0) {
+      hasCalledTimeUpCallback.current = true;
       timeUpCallback();
     }
-  }, [timeLeft, timeUpCallback]);
+    return () => clearInterval(timer);
+  }, [isRunning, timeLeft, timeUpCallback]);
 
   const toggleTimer = () => {
     setIsRunning(!isRunning);
@@ -40,6 +37,7 @@ export const Timer = ({
     setIsRunning(false);
     setTimeLeft(duration);
     timeResetCallback();
+    hasCalledTimeUpCallback.current = false;
   };
 
   const progress = ((duration - timeLeft) / duration) * 100;

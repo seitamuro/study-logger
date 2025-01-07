@@ -16,3 +16,11 @@ export const TimerRecordSchema = z.object({
   duration: z.number(),
 });
 export type TimerRecord = z.infer<typeof TimerRecordSchema>;
+
+export const PostTimerRecordRequestSchema = z.object({
+  duration: z.number(),
+});
+
+export type PostTimerRecordRequest = z.infer<
+  typeof PostTimerRecordRequestSchema
+>;

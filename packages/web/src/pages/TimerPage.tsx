@@ -1,16 +1,22 @@
 import { Authenticator } from '@aws-amplify/ui-react';
 import { useState } from 'react';
 import { Timer } from '../components/Timer';
+import { useTimerRecords } from '../hooks/useTimerRecords';
 
 export const TimerPage: React.FC = () => {
   const [isTimeUp, setIsTimeUp] = useState(false);
+  const { postTimerRecord } = useTimerRecords();
+  const duration = 5; // seconds
 
   return (
     <Authenticator>
       <Timer
-        duration={5}
+        duration={duration}
         timeResetCallback={() => setIsTimeUp(false)}
-        timeUpCallback={() => setIsTimeUp(true)}
+        timeUpCallback={() => {
+          setIsTimeUp(true);
+          postTimerRecord(duration);
+        }}
       />
       {isTimeUp && (
         <div

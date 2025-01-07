@@ -1,11 +1,12 @@
 import { createRoute, RouteHandler, z } from '@hono/zod-openapi';
-import { ErrorResponse, MessageSchema, TimerRecordStatus } from 'types/models';
+import {
+  ErrorResponse,
+  MessageSchema,
+  PostTimerRecordRequestSchema,
+  TimerRecordStatus,
+} from 'types/models';
 import { Env } from '../../index';
 import { updateTimerRecord } from './common/';
-
-const requestBodySchema = z.object({
-  duration: z.number().int().positive(),
-});
 
 export const postTimerRecordRoute = createRoute({
   path: '/record',
@@ -22,7 +23,7 @@ export const postTimerRecordRoute = createRoute({
     body: {
       content: {
         'application/json': {
-          schema: requestBodySchema,
+          schema: PostTimerRecordRequestSchema,
         },
       },
     },
@@ -67,7 +68,7 @@ export const postTimerRecordHandler: RouteHandler<typeof postTimerRecordRoute, E
   try {
     const payload = c.get('idTokenPayload');
     const rawBody = await c.req.json();
-    const body = requestBodySchema.parse(rawBody);
+    const body = PostTimerRecordRequestSchema.parse(rawBody);
 
     const record = {
       userId: payload.sub,
