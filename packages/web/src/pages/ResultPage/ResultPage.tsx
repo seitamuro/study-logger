@@ -20,6 +20,15 @@ export const ResultPage = () => {
   const { data: records } = getTimerRecords(2025, 1);
   const [totalTime, setTotalTime] = useState(0);
 
+  const durationLabel = (seconds: number): string => {
+    const _minutes = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, '0');
+    const _seconds = (seconds % 60).toString().padStart(2, '0');
+
+    return `${_minutes}分${_seconds}秒`;
+  };
+
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     return date.toLocaleString('ja-JP', {
@@ -55,12 +64,12 @@ export const ResultPage = () => {
                 records.map((record) => (
                   <TableRow key={record.timestamp} hover>
                     <TableCell>{formatDate(record.timestamp)}</TableCell>
-                    <TableCell>{record.duration}分</TableCell>
+                    <TableCell>{durationLabel(record.duration)}</TableCell>
                   </TableRow>
                 ))}
               <TableRow sx={{ '& td': { borderTop: '2px solid black' } }}>
                 <TableCell>合計</TableCell>
-                <TableCell>{totalTime}分</TableCell>
+                <TableCell>{durationLabel(totalTime)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
